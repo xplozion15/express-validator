@@ -26,9 +26,12 @@ const validateUser = [
 
 exports.getGetUser = (req, res) => {
   const { emailsearch } = req.query;
-  const user = usersStorage.find((el) => el.email === emailsearch);
-
-  res.render("search", { user });
+  const user = usersStorage.getUsers().find((el) => el.email === emailsearch);
+  if (user !== undefined) {
+    res.render("search", { user: user });
+  } else {
+    res.send("element not found");
+  }
 };
 
 exports.usersListGet = (req, res) => {
